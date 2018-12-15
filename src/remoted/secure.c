@@ -280,10 +280,6 @@ static void HandleSecureMessage(char *buffer, int recv_b, struct sockaddr_in *pe
 
         if (*tmp_msg != '!') {
             merror(ENCFORMAT_ERROR, "(unknown)", srcip);
-
-            if (sock_client >= 0)
-                _close_sock(&keys, sock_client);
-
             return;
         }
 
@@ -311,8 +307,6 @@ static void HandleSecureMessage(char *buffer, int recv_b, struct sockaddr_in *pe
 
             // Send key request by id
             push_request(buffer + 1,"id");
-            if (sock_client >= 0)
-                _close_sock(&keys, sock_client);
 
             return;
         }
@@ -326,8 +320,6 @@ static void HandleSecureMessage(char *buffer, int recv_b, struct sockaddr_in *pe
 
             // Send key request by ip
             push_request(srcip,"ip");
-            if (sock_client >= 0)
-                _close_sock(&keys, sock_client);
 
             return;
         } else {
@@ -349,9 +341,6 @@ static void HandleSecureMessage(char *buffer, int recv_b, struct sockaddr_in *pe
                 push_request(buffer + 1, "id");
             }
         }
-
-        if (sock_client >= 0)
-            _close_sock(&keys, sock_client);
 
         return;
     }
